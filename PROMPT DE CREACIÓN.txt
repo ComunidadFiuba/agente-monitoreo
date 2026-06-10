@@ -1,0 +1,38 @@
+Quiero construir un agente de monitoreo con Playwright en Python.
+El objetivo final es monitorear expedientes judiciales, pero primero
+vamos a practicar el patrón completo con MercadoLibre.
+
+La carpeta del proyecto ya existe en: D:\Agente de monitoreo
+
+## Lo que necesito
+
+### Script 1 — login_y_guardar_sesion.py
+- Abrir Chromium en modo visible (headless=False)
+- Navegar a mercadolibre.com.ar
+- Esperar que YO haga el login manualmente (incluyendo captcha si aparece)
+- Cuando presiono ENTER en la terminal, guardar la sesión completa en session.json
+- Cerrar el browser
+
+### Script 2 — monitorear.py
+- Leer session.json para retomar la sesión guardada
+- Recibir un array de URLs de productos de MercadoLibre
+- Para cada producto: extraer título, precio, y disponibilidad
+- Comparar con el estado anterior guardado en estado_{producto}.json
+- Si algo cambió: mostrar en consola qué cambió y enviar un mail con smtplib
+- Si no cambió: loguear "sin novedades"
+- Correr en modo headless=True
+
+### .env
+- MAIL_USER, MAIL_PASS (Gmail app password), MAIL_DESTINO
+
+### requirements.txt
+- playwright, python-dotenv
+
+## Consideraciones
+- Usar storage_state de Playwright para guardar/restaurar sesión
+- Manejar el caso en que la sesión expire (loguear error claro)
+- Los selectores deben ser robustos, preferir data-testid o aria sobre clases CSS
+- Código limpio, comentado, listo para adaptar luego al PJN
+
+Trabajá directamente en D:\Agente de monitoreo
+Arrancá creando la estructura de carpetas y el requirements.txt.
