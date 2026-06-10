@@ -38,6 +38,26 @@ PRODUCTOS = [
     "https://www.mercadolibre.com.ar/cortapluma-navaja-victorinox-06123-escort-color-rojo-6-usos-hecho-en-suiza/p/MLA25840911",
     "https://www.mercadolibre.com.ar/juego-de-cuchillo-y-serrucho-suizo-bahco-lap-knife-laplander/p/MLA22996083",
     "https://www.mercadolibre.com.ar/navaja-signature-lite-onix-black-0622631p-inmediat-color-negro/p/MLA26461443",
+    # Organizadores de escritorio
+    "https://www.mercadolibre.com.ar/portataco-portaclip-stendy-portalapiz-metal-organizador-escritorio-negro/p/MLA38806854",
+    "https://www.mercadolibre.com.ar/organizadores-de-escritorio-juego-de-25-separador-cajones/p/MLA2043439220",
+    "https://www.mercadolibre.com.ar/organizador-de-maquillaje-cremas-escritorio-porta-lapices-y-papeleria-cajones-multifuncional-ideal-para-decoracion-aesthetic-almacenamiento-tierno-y-viral-blanco-levys-bazar/p/MLA57035249",
+    "https://www.mercadolibre.com.ar/carpeta-archivero-expandible-para-documentos-organizador/up/MLAU3409542313",
+    "https://www.mercadolibre.com.ar/set-organizadores-para-escritorio-placard-kit-x16-acrilico-cajones-transparentes-hogares-oficina-escritorio-papeles-utiles-papeleria-accesorios-multiuso-cocina-bano-heladera-y-alacena-levys-bazar/p/MLA65102455",
+    "https://www.mercadolibre.com.ar/organizador-de-escritorio-gadnic-orgmes02-madera-ecologica-14-compartimentos-soporte-para-celular-diseno-desplegable-portatil/p/MLA35416468",
+    "https://www.mercadolibre.com.ar/organizador-maquillajes-escritorio-o-bano-con-cajones/up/MLAU395094984",
+    "https://www.mercadolibre.com.ar/bandeja-organizadora-horizontal-pizzini-a4-2-niveles-acrilica-ahumada/p/MLA33979197",
+    "https://www.mercadolibre.com.ar/organizador-de-escritorio-stendy-material-metal-portataco-portalapiz-portaclips-7-compartimentos-cavidades-color-negro-malla-metalica/p/MLA43284126",
+    "https://www.mercadolibre.com.ar/estanteria-escritorio-oficina-mtl-organizador-acero-almacenamiento-vertical-repisas-superiores-dos-compartimientos-estructura-desmontable-orden-trabajo-hogar-estudio-setup-moderno-funcional/p/MLA63278722",
+    # Ofertas relampago (precio/stock cambian seguido, buenas para probar deteccion de cambios)
+    "https://www.mercadolibre.com.ar/combo-hidrolavadora-aspiradora-electrica-alta-presion-trent-amarillo-50hz/p/MLA57687505",
+    "https://www.mercadolibre.com.ar/bomba-presurizadora-vasser-pre1-120w-para-12-banos/up/MLAU3019799311",
+    "https://www.mercadolibre.com.ar/aspiradora-robot-trapeadora-fika-limpieza-sense-antichoque-con-app-wifi-color-negro/p/MLA54522658",
+    "https://www.mercadolibre.com.ar/ventilador-de-techo-kanjihome-kjh-cfmb001sl-de-42-con-luz-led-y-6-velocidades/p/MLA45865594",
+    "https://www.mercadolibre.com.ar/bicicleta-spinning-shock-rider-profesional-con-amortiguador-30-kgs-y-app-bluetooth-energy-fit/p/MLA27003152",
+    "https://www.mercadolibre.com.ar/silla-gamer-alpina-ergonomica-giratoria-reclinableft-088-color-negroblanco-material-del-tapizado-cuero-sintetico/p/MLA47080512",
+    "https://www.mercadolibre.com.ar/hidrolavadora-electrica-alta-presion-trent-hlt307-1400w-1600-psi-110-bar-con-accesorios/p/MLA26994482",
+    "https://www.mercadolibre.com.ar/balde-easy-wring-vileda-pedal-centrifugo-y-mopa-negro-y-rojo/p/MLA19951479",
 ]
 
 load_dotenv(BASE_DIR / ".env")
@@ -197,6 +217,11 @@ def main() -> None:
                 datos_actuales = extraer_datos_producto(pagina)
             except Exception as exc:
                 print(f"[{slug}] ERROR al extraer datos: {exc}")
+                continue
+
+            if datos_actuales["disponibilidad"] == "desconocido":
+                print(f"[{slug}] omitido: no se pudo determinar la disponibilidad "
+                      f"(la pagina no tiene boton 'Comprar ahora' / mensaje de stock).")
                 continue
 
             datos_anteriores = cargar_estado_anterior(slug)
