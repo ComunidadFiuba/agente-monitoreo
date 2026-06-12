@@ -218,13 +218,16 @@ def main() -> None:
                 detalle = "\n".join(cambios)
                 print(f"[{slug}] CAMBIOS DETECTADOS:\n{detalle}")
 
-                enviar_mail(
-                    asunto=f"[Monitoreo ML] Cambios en {datos_actuales.get('titulo') or slug}",
-                    cuerpo=(
-                        f"Se detectaron cambios en el producto:\n{url}\n\n"
-                        f"{detalle}\n"
-                    ),
-                )
+                try:
+                    enviar_mail(
+                        asunto=f"[Monitoreo ML] Cambios en {datos_actuales.get('titulo') or slug}",
+                        cuerpo=(
+                            f"Se detectaron cambios en el producto:\n{url}\n\n"
+                            f"{detalle}\n"
+                        ),
+                    )
+                except Exception as exc:
+                    print(f"[{slug}] ERROR al enviar el mail de aviso: {exc}")
 
                 guardar_estado(slug, datos_actuales)
             else:
